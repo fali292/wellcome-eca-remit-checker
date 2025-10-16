@@ -38,4 +38,339 @@
     .label{font-weight:600; margin-bottom:8px}
     textarea{
       width:100%; min-height:230px; resize:vertical;
-      border:1px solid var(--border); border-radius:
+      border:1px solid var(--border); border-radius:var(--radius);
+      padding:12px 14px; font:inherit; color:var(--ink); background:#fff;
+    }
+    textarea:focus, select:focus, input:focus{
+      outline:3px solid rgba(29,78,216,.25);
+      border-color:var(--focus);
+    }
+
+    .row{display:flex; flex-wrap:wrap; gap:12px; margin-top:var(--gap); align-items:center}
+    select, input[type="number"]{
+      border:1px solid var(--border); border-radius:var(--radius); background:#fff; color:var(--ink);
+      padding:10px 12px; font:inherit; min-width: 220px;
+    }
+    .check{display:inline-flex; gap:8px; align-items:center; color:var(--muted)}
+
+    fieldset{border:1px solid var(--border); border-radius:var(--radius); padding:12px; margin-top:var(--gap)}
+    legend{padding:0 6px; color:var(--muted); font-size:14px}
+    .grid{display:grid; gap:12px; grid-template-columns:repeat(2,minmax(0,1fr))}
+    @media (max-width:760px){ .grid{grid-template-columns:1fr} }
+
+    .details summary{cursor:pointer; color:var(--muted)}
+    .actions{display:flex; gap:10px; margin-top:16px}
+    .btn{
+      appearance:none; border:1px solid var(--border); background:#fff; color:var(--ink);
+      border-radius:10px; padding:12px 16px; font-weight:700; cursor:pointer;
+    }
+    /* Primary CTA: black button (closer to the inspiration) */
+    .btn.primary{ background:#111; border-color:#111; color:#fff }
+    .btn.ghost{ color:var(--muted) }
+
+    /* Yellow guidance panel right below the form */
+    .guidance{
+      margin-top:24px;
+      background:#fff6b5; /* warm soft yellow */
+      border:1px solid #f2e48a;
+      border-radius:var(--radius);
+      padding:16px;
+    }
+    .guidance h2{margin:0 0 8px; font-size:18px}
+    .guidance p{margin:0 0 8px; color:#1f2937}
+    .links{margin:8px 0 0; padding-left:18px}
+    .links li{margin:4px 0}
+
+    /* Results section uses plain blocks (no cards/chrome) */
+    #results{margin-top:28px}
+    #results h2{margin:0 0 10px; font-size:22px}
+    .scorecards{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px}
+    @media (max-width:760px){ .scorecards{grid-template-columns:1fr} }
+    .scorecard{border:1px solid var(--border); border-radius:var(--radius); padding:12px; background:#fff}
+    .scorecard h3{margin:0 0 8px}
+    .score{font-weight:700; font-size:30px}
+    .stack{display:flex; flex-direction:column; gap:8px}
+    .bar{display:flex; align-items:center; gap:12px}
+    progress{width:100%; height:10px}
+    .cols{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px}
+    @media (max-width:760px){ .cols{grid-template-columns:1fr} }
+    .panel{border:1px solid var(--border); border-radius:var(--radius); padding:12px; background:#fff}
+    .risks li{color:var(--warn)}
+    .reasons, ul, ol{margin:8px 0 0; padding-left:18px}
+
+    footer{border-top:1px solid var(--border); margin-top:28px; padding:14px 0}
+    .tiny{font-size:12px; color:var(--muted)}
+    .hidden{display:none}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>Before you start</h1>
+      <p class="lede">
+        Paste your proposal summary to check <strong>eligibility</strong> and <strong>Discovery Research remit</strong> fit for the Wellcome Early‑Career Award.
+        This is a design prototype; results are heuristic, not a funding decision.
+      </p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <form id="checkerForm" novalidate>
+      <label class="block">
+        <div class="label">Enter your proposal summary</div>
+        <textarea id="summary" placeholder="Paste or type ~500–1,500 words describing aims, rationale, methods, expected knowledge gains, and key risks…"></textarea>
+      </label>
+
+      <div class="row">
+        <label class="block">
+          <div class="label">Discipline</div>
+          <select id="discipline">
+            <option value="unspecified">Unspecified</option>
+            <option>STEM / computational</option>
+            <option>Clinical & allied health</option>
+            <option>Experimental medicine</option>
+            <option>Epidemiology / population / public health</option>
+            <option>Arts / humanities / social sciences / bioethics</option>
+          </select>
+        </label>
+
+        <label class="check"><input type="checkbox" id="involvesHumans"/> Involves human participants / data</label>
+        <label class="check"><input type="checkbox" id="usesAnimals"/> Uses animals</label>
+      </div>
+
+      <fieldset>
+        <legend>Quick eligibility & remit checklist</legend>
+        <div class="grid">
+          <label class="block">
+            <div class="label">Career training</div>
+            <select id="training">
+              <option value="phd">Completed PhD / higher research degree</option>
+              <option value="equiv">No PhD, but ≥4 years’ equivalent research experience</option>
+              <option value="none">Neither of the above</option>
+            </select>
+          </label>
+
+          <label class="block">
+            <div class="label">Postdoctoral experience (years)</div>
+            <input type="number" id="postdocYears" min="0" step="0.1" value="0"/>
+          </label>
+
+          <label class="block">
+            <div class="label">Time on project (%)</div>
+            <input type="number" id="timePct" min="0" max="100" step="1" value="80"/>
+          </label>
+
+          <label class="block">
+            <div class="label">Administering organisation</div>
+            <select id="orgLoc">
+              <option value="uk">UK</option>
+              <option value="roi">Republic of Ireland</option>
+              <option value="lmics">Low-/middle‑income country</option>
+              <option value="india">India (not eligible)</option>
+              <option value="china">Mainland China (not eligible)</option>
+              <option value="other">Other</option>
+            </select>
+          </label>
+
+          <label class="block">
+            <div class="label">Co‑applicants (ECA)</div>
+            <select id="coapplicants">
+              <option value="no">No (lead applicant only)</option>
+              <option value="yes">Yes (co‑applicants listed)</option>
+            </select>
+          </label>
+        </div>
+
+        <details class="details" style="margin-top:8px">
+          <summary>Potential out‑of‑remit signals</summary>
+          <div class="grid" style="margin-top:8px">
+            <label class="block">
+              <div class="label">Main aim is to test if an intervention works (e.g., large RCT)</div>
+              <select id="trialFocus"><option>No</option><option>Yes</option></select>
+            </label>
+            <label class="block">
+              <div class="label">Primary goal is diagnostic/treatment for clinical care</div>
+              <select id="diagnosticFocus"><option>No</option><option>Yes</option></select>
+            </label>
+            <label class="block">
+              <div class="label">Animal disease not relevant to humans</div>
+              <select id="animalOut"><option>No</option><option>Yes</option></select>
+            </label>
+            <label class="block">
+              <div class="label">Stand‑alone database/resource without research questions</div>
+              <select id="standalone"><option>No</option><option>Yes</option></select>
+            </label>
+          </div>
+        </details>
+      </fieldset>
+
+      <div class="actions">
+        <button type="button" id="analyzeBtn" class="btn primary">Submit proposal summary</button>
+        <button type="button" id="exportBtn" class="btn">Export report (PDF)</button>
+        <button type="button" id="resetBtn" class="btn ghost">Reset</button>
+      </div>
+    </form>
+
+    <section class="guidance" aria-labelledby="how-it-works">
+      <h2 id="how-it-works">How Wellcome grant funding works</h2>
+      <p>Use these links to check scope, eligibility and conditions before you complete a full application.</p>
+      <ul class="links">
+        <li><a target="_blank" rel="noreferrer" href="https://wellcome.org/research-funding/guidance/prepare-to-apply/discovery-research-schemes-remit></li>
+        <li><a target="_blank" rel="noreferrer" href="https://wellcome.org/research-funding/schemes/wellcome-early-career-awards        <li>https://wellcome.org/research-funding/guidance/policies-grant-conditions/grant-conditionsGrant conditions & policies</a></li>
+        <li>https://wellcome.org/research-funding/guidance/prepare-to-apply/early-career-researchEarly‑career researcher guidance</a></li>
+      </ul>
+      <p><strong>Need help?</strong> Contact Wellcome Funding Information Advisers via the “Contact us” links on the pages above.</p>
+    </section>
+
+    <section id="results" class="hidden">
+      <h2>Results</h2>
+      <div class="scorecards">
+        <div class="scorecard">
+          <h3>Eligibility</h3>
+          <div class="score" id="eligScore">–</div>
+          <ul id="eligReasons" class="reasons"></ul>
+        </div>
+        <div class="scorecard">
+          <h3>Remit fit</h3>
+          <div class="score" id="remitScore">–</div>
+          <ul id="remitReasons" class="reasons"></ul>
+        </div>
+        <div class="scorecard">
+          <h3>Assessment (50/25/25)</h3>
+          <div class="stack">
+            <div class="bar"><span>Proposal (50%)</span><progress id="propProg" max="100" value="0"></progress></div>
+            <div class="bar"><span>Skills & experience (25%)</span><progress id="skillsProg" max="100" value="0"></progress></div>
+            <div class="bar"><span>Research environment (25%)</span><progress id="envProg" max="100" value="0"></progress></div>
+          </div>
+          <ul id="assessNotes" class="reasons"></ul>
+        </div>
+      </div>
+
+      <div class="cols">
+        <div class="panel">
+          <h3>Strengths</h3>
+          <ul id="strengths"></ul>
+        </div>
+        <div class="panel">
+          <h3>Risks</h3>
+          <ul id="risks" class="risks"></ul>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:12px">
+        <h3>Suggestions to tighten your summary</h3>
+        <ol id="suggestions"></ol>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap tiny">
+      <p>Prototype for product exploration. Sources: Wellcome ECA scheme & Discovery Research remit. No affiliation implied. No data leaves your browser.</p>
+    </div>
+  </footer>
+
+  <script>
+    // ====== Same analysis logic (client-side only) ======
+    const $ = id => document.getElementById(id);
+    const analyzeBtn = $('analyzeBtn'), results = $('results'), exportBtn = $('exportBtn'), resetBtn = $('resetBtn');
+
+    analyzeBtn.addEventListener('click', runAnalysis);
+    exportBtn.addEventListener('click', () => window.print());
+    resetBtn.addEventListener('click', () => { $('checkerForm').reset(); results.classList.add('hidden'); });
+
+    function runAnalysis(){
+      const summary = $('summary').value.trim();
+      const training = $('training').value;
+      const postdocYears = parseFloat(($('postdocYears').value||'0'));
+      const timePct = parseFloat(($('timePct').value||'0'));
+      const orgLoc = $('orgLoc').value;
+      const coapps = $('coapplicants').value === 'yes';
+
+      const trialFocus = $('trialFocus').value === 'Yes';
+      const diagnosticFocus = $('diagnosticFocus').value === 'Yes';
+      const animalOut = $('animalOut').value === 'Yes';
+      const standalone = $('standalone').value === 'Yes';
+
+      // Eligibility (0-100)
+      let elig=100, eligReasons=[];
+      if(training==='none'){ elig-=50; eligReasons.push('Needs PhD or ≥4 years equivalent research experience.'); }
+      if(postdocYears>3){ elig-=10; eligReasons.push('Postdoctoral experience >3 years – add context (breaks, part‑time, discipline change).'); }
+      if(timePct<80){ elig-=25; eligReasons.push('Commit at least 80% of research time to the project (≤20% other duties).'); }
+      if(orgLoc==='india'||orgLoc==='china'){ elig-=100; eligReasons.push('Administering organisation location is ineligible for ECA.'); }
+      if(coapps){ elig-=25; eligReasons.push('Co‑applicants are not accepted for the Early‑Career Award.'); }
+      elig = clamp(elig);
+
+      // Remit fit (0-100)
+      let remit=100, remitReasons=[];
+      if(trialFocus || /randomi(s|z)ed|phase\s?(I{1,3}|iv|2|3)/i.test(summary)){
+        remit-=35; remitReasons.push('Large clinical trial / efficacy‑testing focus – Discovery remit prioritises understanding/mechanism.');
+      }
+      if(diagnosticFocus || /(diagnostic|screening|clinical decision support|triage)\b/i.test(summary)){
+        remit-=25; remitReasons.push('Primary aim appears diagnostic/clinical‑care oriented – emphasise benefits to research understanding or methods.');
+      }
+      if(animalOut){ remit-=40; remitReasons.push('Animal disease not relevant to humans – out of remit unless zoonotic or a model for human biology.'); }
+      if(standalone || (/(database|registry|repository)\b/i.test(summary) && !/(research question|hypothes|aim)/i.test(summary))){
+        remit-=20; remitReasons.push('Stand‑alone resource without clear research questions – only in remit if integral to answering them.');
+      }
+      if (/(mechanism|causal|pathophysiology|fundamental|novel method|framework|tool|conceptual|theoretical|insight|understanding|hypothesis|explor(e|atory))/i.test(summary)){
+        remit += 5;
+      }
+      remit = clamp(remit);
+
+      // Assessment heuristics
+      const len = summary.split(/\s+/).filter(Boolean).length;
+      const hasAims    = /(aim|objective|we propose|we will)/i.test(summary);
+      const hasMethods = /(method|approach|data|model|experiment|fieldwork|analysis|sample|cohort|interview|ethnograph|survey)/i.test(summary);
+      const hasRisks   = /(risk|limitation|challenge|mitigat)/i.test(summary);
+      const hasTeam    = /(mentor|sponsor|collaborat|training|skills|develop)/i.test(summary);
+      const hasEnv     = /(environment|host|facilit(y|ies)|infrastructure|culture|inclusive|open|data sharing)/i.test(summary);
+      const novelty    = /(novel|first|innovative|creative|new|advance)/i.test(summary);
+
+      let prop=10; prop+=hasAims?25:0; prop+=hasMethods?25:0; prop+=novelty?15:0; prop+=hasRisks?15:0; prop+=(len>200?10:0); prop=Math.min(100,prop);
+      let skills=10; skills+=hasTeam?40:0; skills+=(postdocYears<=3?10:5); skills+=(training!=='none'?20:0); skills=Math.min(100,skills);
+      let env=10; env+=hasEnv?60:0; env=Math.min(100,env);
+
+      // Render
+      results.classList.remove('hidden');
+      $('eligScore').textContent = elig;
+      $('eligReasons').innerHTML = renderList(eligReasons);
+      $('remitScore').textContent = remit;
+      $('remitReasons').innerHTML = renderList(remitReasons);
+      $('propProg').value = prop; $('skillsProg').value = skills; $('envProg').value = env;
+      $('assessNotes').innerHTML = `<li>Proposal ~${len} words; heuristic quality score ${Math.round(prop)}.</li><li>Skills/experience proxy ${Math.round(skills)}; Environment proxy ${Math.round(env)}.</li>`;
+
+      const strengths=[], risks=[];
+      if(novelty) strengths.push('Signals of novelty/creativity are present.');
+      if(hasMethods) strengths.push('Methods/approach described.');
+      if(hasRisks) strengths.push('Risks/mitigations acknowledged.');
+      if(hasTeam) strengths.push('Development/training/collaboration elements referenced.');
+      if(hasEnv) strengths.push('Positive research environment and culture cues.');
+      if(!hasAims) risks.push('Make the aims/objectives explicit and succinct.');
+      if(!hasMethods) risks.push('Describe the methodology and why it’s the right approach.');
+      if(!hasRisks) risks.push('Add key risks/uncertainties and mitigations.');
+      if(remit<70) risks.push('Reframe to emphasise discovery‑led understanding/mechanism.');
+      if(elig<70) risks.push('Address eligibility gaps (training, time commitment, co‑applicants, admin org).');
+      $('strengths').innerHTML = renderList(strengths,true);
+      $('risks').innerHTML = renderList(risks,true);
+
+      const sugg=[];
+      if(!hasAims)    sugg.push('Open with a <strong>bold, discovery‑led question</strong> and 2–3 concise aims.');
+      if(!hasMethods) sugg.push('Outline key <strong>methods/approach</strong> and why they best answer the question.');
+      if(!/insight|understanding|mechanism/i.test(summary)) sugg.push('State the <strong>new knowledge/insight</strong> expected and how it shifts understanding.');
+      if(!hasRisks)   sugg.push('List <strong>main risks/uncertainties</strong> and brief mitigations.');
+      if(!hasTeam)    sugg.push('Mention <strong>training/skills development</strong> and any collaborators’ roles.');
+      if(!hasEnv)     sugg.push('Reference your <strong>research environment</strong> and an <strong>inclusive, open culture</strong>.');
+      if(trialFocus||diagnosticFocus) sugg.push('Clarify any trial/diagnostic work probes <strong>mechanism</strong> or <strong>proof‑of‑concept</strong> within a discovery programme.');
+      $('suggestions').innerHTML = sugg.length ? sugg.map(s => `<li>${s}</li>`).join('') : '<li>Looks good. Consider minor tightening for clarity.</li>';
+    }
+
+    function renderList(arr, allowEmpty){
+      if(!arr || !arr.length) return allowEmpty ? '<li>—</li>' : '<li>No major issues detected.</li>';
+      return arr.map(s=>`<li>${escapeHtml(s)}</li>`).join('');
+    }
+    function escapeHtml(str){ return String(str).replace(/[&<>\"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[s])); }
+    function clamp(n){ return Math.max(0, Math.min(100,n)); }
+  </script>
+</body>
+</html>
