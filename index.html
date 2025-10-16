@@ -405,4 +405,99 @@
           if (lower.includes(n.phrase)){
             remit += n.weight;
             negHits.push(n);
-            remitReasons.push(`
+            remitReasons.push(`Out‑of‑remit cue: “${escapeHtml(n.phrase)}”${n.note?` — ${escapeHtml(n.note)}`:''}.`);
+          }
+        }
+
+        // Allow trials/diagnostics if clearly mechanistic/proof‑of‑concept
+        if (negHits.length && /(mechanism|mechanistic|proof[- ]of[- ]concept)/i.test(s)){
+          remit += 6; // soften
+          remitReasons.push("Mechanistic/PoC framing detected — softened remit penalty.");
+        }
+
+        remit = clamp(remit);
+
+        // ===== Assessment heuristics (unchanged) =====
+        const len = s.split(/\s+/).filter(Boolean).length;
+        const hasAims    = /(aim|objective|we propose|we will)/i.test(s);
+        const hasMethods = /(method|approach|data|model|experiment|fieldwork|analysis|sample|cohort|interview|ethnograph|survey)/i.test(s);
+        const hasRisks   = /(risk|limitation|challenge|mitigat)/i.test(s);
+        const hasTeam    = /(mentor|sponsor|collaborat|training|skills|develop)/i.test(s);
+        const hasEnv     = /(environment|host|facilit(y|ies)|infrastructure|culture|inclusive|open|data sharing)/i.test(s);
+        const novelty    = /(novel|first|innovative|creative|new|advance)/i.test(s);
+
+        let prop=10; prop+=hasAims?25:0; prop+=hasMethods?25:0; prop+=novelty?15:0; prop+=hasRisks?15:0; prop+=(len>200?10:0); prop=Math.min(100,prop);
+        let skills=10; skills+=hasTeam?40:0; skills+=(!Number.isFinite(postdocYears)||postdocYears<=3?10:5); skills+=(training!=='none'&&training!=='unknown'?20:0); skills=Math.min(100,skills);
+        let env=10; env+=hasEnv?60:0; env=Math.min(100,env);
+
+        // ===== Render =====
+        results.classList.remove('hidden');
+        $('eligScore').textContent  = Math.round(elig);
+        $('eligReasons').innerHTML  = renderList(unique(reasons), false);
+        $('remitScore').textContent = Math.round(remit);
+        $('remitReasons').innerHTML = renderList(unique(remitReasons), false);
+
+        $('propProg').value = prop; $('skillsProg').value = skills; $('envProg').value = env;
+        $('assessNotes').innerHTML =
+          `<li>Proposal ~${len} words; heuristic quality score ${Math.round(prop)}.</li>`+
+          `<li>Skills/experience proxy ${Math.round(skills)}; Environment proxy ${Math.round(env)}.</li>`;
+
+        const strengths=[], risks=[];
+        if(novelty) strengths.push('Signals of novelty/creativity are present.');
+        if(hasMethods) strengths.push('Methods/approach described.');
+        if(hasRisks) strengths.push('Risks/mitigations acknowledged.');
+        if(hasTeam) strengths.push('Development/training/collaboration elements referenced.');
+        if(hasEnv) strengths.push('Positive research environment and culture cues.');
+        if(!hasAims)   risks.push('Make the aims/objectives explicit and succinct.');
+        if(!hasMethods) risks.push('Describe the methodology and why it’s the right approach.');
+        if(!hasRisks)  risks.push('Add key risks/uncertainties and mitigations.');
+        if(remit<70)   risks.push('Reframe to emphasise discovery‑led understanding/mechanism.');
+        if(elig<70)    risks.push('Address eligibility gaps (training, time commitment, co‑applicants, admin org).');
+
+        $('strengths').innerHTML = renderList(strengths,true);
+        $('risks').innerHTML     = renderList(risks,true);
+
+        const sugg=[];
+        if(!hasAims)    sugg.push('Open with a <strong>bold, discovery‑led question</strong> and 2–3 concise aims.');
+        if(!hasMethods) sugg.push('Outline key <strong>methods/approach</strong> and why they best answer the question.');
+        if(!/insight|understanding|mechanism/i.test(s)) sugg.push('State the <strong>new knowledge/insight</strong> expected and how it shifts understanding.');
+        if(!hasRisks)   sugg.push('List <strong>main risks/uncertainties</strong> and brief mitigations.');
+        if(!hasTeam)    sugg.push('Mention <strong>training/skills development</strong> and any collaborators’ roles.');
+        if(!hasEnv)     sugg.push('Reference your <strong>research environment</strong> and an <strong>inclusive, open culture</strong>.');
+        if(/(randomi[sz]ed|phase\s?(I{1,3}|iv|2|3)\b|trial|efficacy|diagnostic|screening)/i.test(s))
+          sugg.push('If any trial/diagnostic elements exist, position them to probe <strong>mechanism</strong> or early <strong>proof‑of‑concept</strong> within a discovery‑led programme.');
+        $('suggestions').innerHTML = sugg.length ? sugg.map(li => `<li>${li}</li>`).join('') : '<li>Looks good. Consider minor tightening for clarity.</li>';
+
+        results.scrollIntoView({behavior:'smooth', block:'start'});
+
+      } catch(e){
+        console.error(e); toast('Something went wrong while analysing. See console for details.');
+      } finally {
+        analyzeBtn.disabled = false; analyzeBtn.textContent = prev;
+      }
+    }
+
+    // --- helpers ---
+    function parseOrNaN(v){ const n = parseFloat(v); return Number.isFinite(n)?n:NaN; }
+    function reason(text){ return text; }
+    function clamp(n){ return Math.max(0, Math.min(100,n)); }
+    function unique(arr){ return [...new Set(arr)]; }
+    function renderList(arr, allowEmpty){ if(!arr || !arr.length) return allowEmpty?'<li>—</li>':'<li>No major issues detected.</li>'; return arr.map(s=>`<li>${escapeHtml(s)}</li>`).join(''); }
+    function escapeHtml(str){ const map={"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}; return String(str).replace(/[&<>"']/g, ch => map[ch]); }
+    function toast(msg){ const t=$('toast'); t.textContent=msg; t.style.display='block'; clearTimeout(t._h); t._h=setTimeout(()=> t.style.display='none', 2500); }
+
+    function inferSignalsFromText(text){
+      const t = text.toLowerCase();
+      return {
+        coApplicantsLikely: /(co[-\s]?applicant|co[-\s]?investigator|co[-\s]?pi|consortium|multi[-\s]centre|multi[-\s]center|team of (investigators|applicants))/i.test(text),
+        adminIndia: /\badminister|host|affiliat/i.test(text) && /\bindia\b/i.test(text),
+        adminChina: /\badminister|host|affiliat|transfer\b/i.test(text) && /\bmainland china|people'?s republic of china|prc\b/i.test(text),
+        transferToChina: /\btransfer( of)? (grant )?funds (to|into) (mainland )?china\b/i.test(text),
+        phdNotDone: /\b(phd (student|candidate)|enrolled in (a )?phd)\b/i.test(text),
+        postdocOver3: /\b(postdoc(toral)? (experience )?(over|more than|> ?)?3 (years|yrs))\b/i.test(text),
+        timeUnder80: /\b([1-7]\d)\s*%(\s*(fte|time|effort))?\b/i.test(text) && parseInt(text.match(/\b([1-7]\d)\s*%/i)[1],10) < 80
+      };
+    }
+  </script>
+</body>
+</html>
