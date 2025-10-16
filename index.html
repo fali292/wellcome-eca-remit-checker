@@ -96,4 +96,313 @@
           </label>
 
           <label class="block">
-            <
+            <div class="label">Time on project (%)</div>
+            <input type="number" id="timePct" min="0" max="100" step="1" placeholder="e.g., 80" />
+          </label>
+
+          <label class="block">
+            <div class="label">Administering organisation</div>
+            <select id="orgLoc">
+              <option value="unknown" selected>Select…</option>
+              <option value="uk">UK</option>
+              <option value="roi">Republic of Ireland</option>
+              <option value="lmics">Low-/middle‑income country</option>
+              <option value="india">India (not eligible)</option>
+              <option value="china">Mainland China (not eligible)</option>
+              <option value="other">Other</option>
+            </select>
+          </label>
+
+          <label class="block">
+            <div class="label">Co‑applicants (ECA)</div>
+            <select id="coapplicants">
+              <option value="unknown" selected>Select…</option>
+              <option value="no">No (lead applicant only)</option>
+              <option value="yes">Yes (co‑applicants listed)</option>
+            </select>
+          </label>
+        </div>
+
+        <details class="details" style="margin-top:8px">
+          <summary>Potential out‑of‑remit signals</summary>
+          <div class="grid" style="margin-top:8px">
+            <label class="block">
+              <div class="label">Main aim is to test if an intervention works (e.g., large RCT)</div>
+              <select id="trialFocus"><option>No</option><option>Yes</option></select>
+            </label>
+            <label class="block">
+              <div class="label">Primary goal is diagnostic/treatment for clinical care</div>
+              <select id="diagnosticFocus"><option>No</option><option>Yes</option></select>
+            </label>
+            <label class="block">
+              <div class="label">Animal disease not relevant to humans</div>
+              <select id="animalOut"><option>No</option><option>Yes</option></select>
+            </label>
+            <label class="block">
+              <div class="label">Stand‑alone database/resource without research questions</div>
+              <select id="standalone"><option>No</option><option>Yes</option></select>
+            </label>
+          </div>
+        </details>
+      </fieldset>
+
+      <div class="actions">
+        <button type="button" id="analyzeBtn" class="btn">Submit proposal summary</button>
+        <button type="button" id="exportBtn" class="btn ghost">Export report (PDF)</button>
+        <button type="button" id="resetBtn" class="btn ghost">Reset</button>
+      </div>
+    </form>
+
+    <section class="guidance" aria-labelledby="how-it-works">
+      <h2 id="how-it-works">How Wellcome grant funding works</h2>
+      <p>Use these links to check scope, eligibility and conditions before you complete a full application.</p>
+      <ul class="links">
+        <li><a target="_blank" rel="noreferrer" href="https://wellcome.org/research-funding">Discovery Research remit (what we fund)</a></li>
+        <li><a target="_blank" rel="noreferrer" href="https://wellcome.org/research-funding/schemes/wellcome-early-career-awards">Early‑Career Award (scheme page)</a></li>
+        <li><a target="_blank" rel="noreferrer" href="https://wellcome.org/research-funding/guidance/policies-grant-conditionsli>
+        <li><a target="_blank" rel="noreferrer" href="https://wellcome.org/research-funding">Early‑career researcher guidance</a></li>
+      </ul>
+      <p><strong>Need help?</strong> Contact Wellcome Funding Information Advisers via the “Contact us” links on the pages above.</p>
+    </section>
+
+    <section id="results" class="hidden" aria-live="polite">
+      <h2>Results</h2>
+      <div class="scorecards">
+        <div class="scorecard">
+          <h3>Eligibility</h3>
+          <div class="score" id="eligScore">–</div>
+          <ul id="eligReasons" class="reasons"></ul>
+        </div>
+        <div class="scorecard">
+          <h3>Remit fit</h3>
+          <div class="score" id="remitScore">–</div>
+          <ul id="remitReasons" class="reasons"></ul>
+        </div>
+        <div class="scorecard">
+          <h3>Assessment (50/25/25)</h3>
+          <div class="stack">
+            <div class="bar"><span>Proposal (50%)</span><progress id="propProg" max="100" value="0"></progress></div>
+            <div class="bar"><span>Skills & experience (25%)</span><progress id="skillsProg" max="100" value="0"></progress></div>
+            <div class="bar"><span>Research environment (25%)</span><progress id="envProg" max="100" value="0"></progress></div>
+          </div>
+          <ul id="assessNotes" class="reasons"></ul>
+        </div>
+      </div>
+
+      <div class="cols">
+        <div class="panel">
+          <h3>Strengths</h3>
+          <ul id="strengths"></ul>
+        </div>
+        <div class="panel">
+          <h3>Risks</h3>
+          <ul id="risks" class="risks"></ul>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:12px">
+        <h3>Suggestions to tighten your summary</h3>
+        <ol id="suggestions"></ol>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap tiny">
+      <p>Prototype for product exploration. Rules summarised from Wellcome ECA & Discovery Research pages; not official guidance. No data leaves your browser.</p>
+    </div>
+  </footer>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <!-- ===== BAKED-IN RULES distilled from your PDFs ===== -->
+  <script>
+    const RULES = {
+      version: "Wellcome ECA · 2025-10",
+      eligibility: {
+        // Hard requirements / bans
+        training: { // from ECA scheme page (completed PhD or ≥4y equiv)
+          requireOneOf: ["phd","equiv"], weightFail: 50,
+          cite: { src: "ECA scheme", note: "PhD or ≥4 years’ equivalent research experience" }
+        },
+        minTimePct: { value: 80, weightFail: 25, cite: { src: "ECA scheme", note: "≥80% research time" } },
+        coApplicants: { accepted: false, weightFail: 25, cite: { src: "ECA scheme", note: "Co‑applicants not accepted" } },
+        adminOrgAllowed: { allow: ["uk","roi","lmics"], ban: ["india","china"], weightFail: 100,
+          cite: { src: "ECA scheme", note: "Admin org: UK/ROI/LMICs; not India or mainland China" }
+        },
+        transferBanChina: { active: true, weightFail: 100, cite: { src: "ECA scheme", note: "Cannot transfer funds into mainland China" } },
+        // Soft cues
+        maxPostdocYears: { value: 3, weightCaution: 10, cite: { src: "ECA scheme", note: ">3 years postdoc needs context" } }
+      },
+      remit: {
+        base: 80,
+        positives: [
+          { phrase:"mechanism", weight:+5 },
+          { phrase:"causal", weight:+4 },
+          { phrase:"pathophysiology", weight:+4 },
+          { phrase:"fundamental", weight:+3 },
+          { phrase:"novel method", weight:+3 },
+          { phrase:"conceptual framework", weight:+3 },
+          { phrase:"tool" , weight:+2 },
+          { phrase:"theoretical", weight:+2 },
+          { phrase:"insight", weight:+2 },
+          { phrase:"understanding", weight:+3 },
+          { phrase:"hypothesis", weight:+2 },
+          { phrase:"exploratory", weight:+2 },
+          { phrase:"needs of communities", weight:+2 },
+          { phrase:"social context", weight:+2 },
+          { phrase:"historical context", weight:+2 },
+          { phrase:"ethical context", weight:+2 }
+        ],
+        negatives: [
+          { phrase:"randomized", weight:-15, note:"large trial/efficacy focus" },
+          { phrase:"randomised", weight:-15, note:"large trial/efficacy focus" },
+          { phrase:"phase ii", weight:-15, note:"efficacy trial" },
+          { phrase:"phase iii", weight:-15, note:"efficacy trial" },
+          { phrase:"multicentre trial", weight:-12 },
+          { phrase:"clinical decision support", weight:-12 },
+          { phrase:"diagnostic", weight:-12 },
+          { phrase:"screening", weight:-10 },
+          { phrase:"standalone database", weight:-10 },
+          { phrase:"stand-alone database", weight:-10 },
+          { phrase:"registry", weight:-8 },
+          { phrase:"repository", weight:-8 },
+          { phrase:"veterinary-only", weight:-15 },
+          { phrase:"animal disease not relevant to humans", weight:-15 }
+        ]
+      }
+    };
+  </script>
+
+  <!-- ===== Analysis logic using RULES ===== -->
+  <script>
+    const $ = id => document.getElementById(id);
+    const analyzeBtn = $('analyzeBtn'), results = $('results'), exportBtn = $('exportBtn'), resetBtn = $('resetBtn');
+
+    // small rules badge
+    const badge = $('rulesBadge');
+    if (badge) badge.textContent = `Ruleset: ${RULES.version}`;
+
+    analyzeBtn.addEventListener('click', runAnalysis);
+    exportBtn.addEventListener('click', () => window.print());
+    resetBtn.addEventListener('click', () => { $('checkerForm').reset(); results.classList.add('hidden'); });
+
+    function runAnalysis(){
+      const summary = $('summary').value.trim();
+      if (!summary) { $('summary').focus(); toast('Please paste a short proposal summary first.'); return; }
+
+      const prev = analyzeBtn.textContent;
+      analyzeBtn.disabled = true; analyzeBtn.textContent = 'Analysing…';
+      try {
+        // explicit inputs
+        const training = $('training').value;  // unknown|phd|equiv|none
+        const postdocYears = parseOrNaN($('postdocYears').value);
+        const timePct = parseOrNaN($('timePct').value);
+        const orgLoc = $('orgLoc').value;      // unknown|uk|roi|lmics|india|china|other
+        const coapps = $('coapplicants').value;// unknown|no|yes
+
+        const s = summary;
+
+        // infer from text (to avoid "always eligible" when inputs unknown)
+        const inferred = inferSignalsFromText(s);
+
+        // ===== Eligibility (rule-driven) =====
+        let elig = 100; const reasons = []; const need = [];
+
+        // training
+        if (training === 'unknown'){
+          need.push('Career training');
+        } else if (training === 'none'){
+          elig -= RULES.eligibility.training.weightFail;
+          reasons.push(reason(`${RULES.eligibility.training.cite.note} — not met`));
+        }
+
+        // postdoc soft caution
+        if (!Number.isFinite(postdocYears)){
+          if (inferred.postdocOver3){
+            elig -= RULES.eligibility.maxPostdocYears.weightCaution;
+            reasons.push(reason("Text suggests >3y postdoc – add context."));
+          } else {
+            need.push('Postdoctoral experience (years)');
+          }
+        } else if (postdocYears > RULES.eligibility.maxPostdocYears.value){
+          elig -= RULES.eligibility.maxPostdocYears.weightCaution;
+          reasons.push(reason(">3y postdoc – add context (breaks, part‑time, discipline change)."));
+        }
+
+        // time commitment
+        if (!Number.isFinite(timePct)){
+          if (inferred.timeUnder80){
+            elig -= RULES.eligibility.minTimePct.weightFail;
+            reasons.push(reason("Text implies <80% time on project — ECA expects ≥80%."));
+          } else {
+            need.push('Time on project (%)');
+          }
+        } else if (timePct < RULES.eligibility.minTimePct.value){
+          elig -= RULES.eligibility.minTimePct.weightFail;
+          reasons.push(reason("Commit at least 80% research time (≤20% other duties)."));
+        }
+
+        // admin org location
+        const allowed = RULES.eligibility.adminOrgAllowed.allow;
+        const banned  = RULES.eligibility.adminOrgAllowed.ban;
+        if (orgLoc === 'unknown'){
+          need.push('Administering organisation location');
+          if (inferred.adminIndia){
+            elig -= RULES.eligibility.adminOrgAllowed.weightFail;
+            reasons.push(reason("Admin org appears in India — ineligible."));
+          }
+          if (inferred.adminChina){
+            elig -= RULES.eligibility.adminOrgAllowed.weightFail;
+            reasons.push(reason("Admin org appears in mainland China — ineligible."));
+          }
+        } else {
+          if (banned.includes(orgLoc)){
+            elig -= RULES.eligibility.adminOrgAllowed.weightFail;
+            reasons.push(reason("Admin org in a restricted location (India or mainland China)."));
+          } else if (!allowed.includes(orgLoc)){
+            reasons.push(reason("Admin org location unclear for ECA — consider UK/ROI/LMICs."));
+          }
+        }
+
+        // transfer ban (China)
+        if (inferred.transferToChina){
+          elig -= RULES.eligibility.transferBanChina.weightFail;
+          reasons.push(reason("Proposal suggests transfer of funds into mainland China — ineligible."));
+        }
+
+        // co‑applicants
+        if (coapps === 'unknown'){
+          need.push('Co‑applicants (ECA)');
+          if (inferred.coApplicantsLikely){
+            elig -= RULES.eligibility.coApplicants.weightFail;
+            reasons.push(reason("Text suggests co‑applicants/consortium — ECA is for a single lead applicant."));
+          }
+        } else if (coapps === 'yes'){
+          elig -= RULES.eligibility.coApplicants.weightFail;
+          reasons.push(reason("Co‑applicants not accepted for ECA."));
+        }
+
+        elig = clamp(elig);
+        if (need.length && elig > 0) reasons.unshift(`Eligibility is provisional — please provide: ${need.join(', ')}.`);
+
+        // ===== Remit (rule-driven) =====
+        let remit = RULES.remit.base;
+        const remitReasons = [];
+        const lower = s.toLowerCase();
+
+        // positives
+        for (const p of RULES.remit.positives){
+          if (lower.includes(p.phrase)) {
+            remit += p.weight;
+            remitReasons.push(`Positive remit cue: “${escapeHtml(p.phrase)}”.`);
+          }
+        }
+
+        // negatives
+        const negHits = [];
+        for (const n of RULES.remit.negatives){
+          if (lower.includes(n.phrase)){
+            remit += n.weight;
+            negHits.push(n);
+            remitReasons.push(`
