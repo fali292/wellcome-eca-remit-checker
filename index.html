@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Wellcome ECA Remit Checker – Prototype</title>
+  https://fonts.googleapis.com
+  <ttps://fonts.gstatic.com
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheetmal UI inspired by Wellcome pages */
+    :root {
+      --bg:#ffffff; --ink:#111111; --muted:#4b5563; --border:#e5e7eb;
+      --focus:#1d4ed8; --brand:#ffdd00; --brand-ink:#111111;
+      --good:#0f9960; --warn:#b45309; --bad:#b91c1c;
+    }
+    *{box-sizing:border-box} html,body{height:100%}
+    body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+    .wrap{max-width:980px;margin:0 auto;padding:0 16px}
+    header{border-bottom:1px solid var(--border);padding:24px 0}
+    h1{font-size:28px;margin:0 0 8px}.lede{margin:0;color:var(--muted);font-size:15px}
+    h2{margin:0 0 8px;font-size:20px}
+    .card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px;margin:20px 0}
+    .info.yellow{border:1px solid var(--border);background:#fff8cc;border-radius:12px;padding:16px;margin:20px 0}
+    .info .links{padding-left:18px;margin:8px 0}.info .links a{color:#0b5cab;text-decoration:underline}
+    .info p{margin:4px 0 0;color:#1f2937}
+    .block{display:block}.label{font-weight:600;margin-bottom:6px}
+    textarea{width:100%;min-height:220px;border:1px solid var(--border);border-radius:10px;padding:12px;font:inherit;color:var(--ink);background:#fff}
+    textarea:focus,select:focus,input:focus{outline:3px solid rgba(29,78,216,.25);border-color:var(--focus)}
+    .row{display:flex;flex-wrap:wrap;gap:12px;margin-top:12px;align-items:center}
+    .check{display:inline-flex;gap:8px;align-items:center;color:var(--muted)}
+    select,input[type="number"]{border:1px solid var(--border);background:#fff;color:var(--ink);padding:9px 10px;border-radius:10px;font:inherit}
+    .fieldset{border:1px solid var(--border);border-radius:12px;padding:12px;margin-top:16px}
+    legend{padding:0 6px;color:var(--muted)}
+    .grid{display:grid;gap:12px;grid-template-columns:repeat(2,minmax(0,1fr))}
+    .details summary{cursor:pointer;color:var(--muted)}
+    .actions{display:flex;gap:10px;margin-top:14px}
+    .btn{border:1px solid var(--border);background:#fff;color:var(--ink);font-weight:600;border-radius:10px;padding:10px 14px;cursor:pointer}
+    .btn.primary{background:var(--brand);border-color:var(--brand);color:var(--brand-ink)}
+    .btn.ghost{background:#fff;color:var(--muted)}
+    .scorecards{display:grid;gap:12px;grid-template-columns:repeat(3,minmax(0,1fr))}
+    .scorecard{border:1px solid var(--border);border-radius:12px;padding:12px;background:#fff}
+    .scorecard h3{margin:0 0 8px}.score{font-size:32px;font-weight:800}
+    .stack{display:flex;flex-direction:column;gap:8px}.bar{display:flex;align-items:center;gap:12px}
+    progress{width:100%;height:10px}
+    .cols{display:grid;gap:12px;grid-template-columns:1fr 1fr;margin-top:12px}
+    .panel{border:1px solid var(--border);border-radius:12px;padding:12px}
+    .risks li{color:var(--warn)} .reasons,ul,ol{margin:8px 0 0;padding-left:18px}
+    footer{border-top:1px solid var(--border);margin-top:24px}
+    footer .tiny{font-size:12px;color:var(--muted);padding:10px 0 20px}
+    .hidden{display:none}
+    @media (max-width:980px){.grid{grid-template-columns:1fr}.scorecards,.cols{grid-template-columns:1fr}}
+    @media print{header,.actions,.info,footer{display:none}.card,.scorecard,.panel{border:1px solid #bbb}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>Before you start</h1>
+      <p class="lede">
+        Paste your proposal summary to check <strong>eligibility</strong> and <strong>Discovery Research remit</strong> fit for the Wellcome Early‑Career Award.
+        This is a design prototype; results are heuristic, not a funding decision.
+      </p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="card">
+      <form id="checkerForm" novalidate>
+        <label class="block">
+          <div class="label">Enter your proposal summary</div>
+          <textarea id="summary" placeholder="Paste or type ~500–1,500 words describing aims, rationale, methods, expected knowledge gains, and key risks…"></textarea>
+        </label>
+
+        <div class="row">
+          <label class="block">
+            <div class="label">Discipline</div>
+            <select id="discipline">
+              <option value="unspecified">Unspecified</option>
+              <option>STEM / computational</option>
+              <option>Clinical & allied health</option>
+              <option>Experimental medicine</option>
+              <option>Epidemiology / population / public health</option>
+              <option>Arts / humanities / social sciences / bioethics</option>
+            </select>
+          </label>
+
+          <label class="check"><input type="checkbox" id="involvesHumans"/> Involves human participants / data</label>
+          <label class="check"><input type="checkbox" id="usesAnimals"/> Uses animals</label>
+        </div>
+
+        <fieldset class="fieldset">
+          <legend>Quick eligibility & remit checklist</legend>
+          <div class="grid">
+            <label class="block">
+              <div class="label">Career training</div>
+              <select id="training">
+                <option value="phd">Completed PhD / higher research degree</option>
+                <option value="equiv">No PhD, but ≥4 years’ equivalent research experience</option>
+                <option value="none">Neither of the above</option>
+              </select>
+            </label>
+
+            <label class="block">
+              <div class="label">Postdoctoral experience (years)</div>
+              <input type="
