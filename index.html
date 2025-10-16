@@ -7,110 +7,62 @@
 
   <!-- Inter font for a clean, Wellcome-like look -->
   https://fonts.googleapis.com
-  https://fonts.gstatic.com
-  https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossoriginy=Inter:wght@400;600;700&display=swap
 
   <style>
-    /* ====== Light style (close to inspiration) ====== */
-    :root{
-      --bg:#ffffff; --ink:#111111; --muted:#4b5563; --link:#0b5cab;
-      --border:#e5e7eb; --focus:#1d4ed8; --accent:#ffdd00; --accent-ink:#111111;
-      --warn:#b45309; --good:#0f9960;
+    :root{ --bg:#ffffff; --ink:#111111; --muted:#4b5563; --link:#0b5cab;
+      --border:#e5e7eb; --focus:#1d4ed8; --warn:#b45309; --good:#0f9960;
       --max:720px; --radius:8px; --gap:16px;
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-      color:var(--ink); background:var(--bg);
-      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
-    }
+    *{box-sizing:border-box} html,body{height:100%}
+    body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg)}
     a{color:var(--link)}
     .wrap{max-width:var(--max); margin:0 auto; padding:0 16px}
     header{padding:32px 0 20px; border-bottom:1px solid var(--border)}
     h1{font-size:32px; line-height:1.2; margin:0 0 6px; font-weight:700; letter-spacing:-0.01em}
     .lede{margin:0; color:var(--muted); font-size:16px}
-
     main{padding:24px 0}
-    .block{display:block}
-    .label{font-weight:600; margin-bottom:8px}
-
-    textarea{
-      width:100%; min-height:230px; resize:vertical;
-      border:1px solid var(--border); border-radius:var(--radius);
-      padding:12px 14px; font:inherit; color:var(--ink); background:#fff;
-    }
-    textarea:focus,select:focus,input:focus{
-      outline:3px solid rgba(29,78,216,.25); border-color:var(--focus)
-    }
-
-    .row{display:flex; flex-wrap:wrap; gap:12px; margin-top:var(--gap); align-items:center}
-    select,input[type="number"]{
-      border:1px solid var(--border); border-radius:var(--radius);
-      background:#fff; color:var(--ink); padding:10px 12px; font:inherit; min-width:220px;
-    }
-    .check{display:inline-flex; gap:8px; align-items:center; color:var(--muted)}
-
-    fieldset{border:1px solid var(--border); border-radius:var(--radius); padding:12px; margin-top:var(--gap)}
+    .block{display:block} .label{font-weight:600; margin-bottom:8px}
+    textarea{width:100%; min-height:230px; resize:vertical; border:1px solid var(--border); border-radius:8px; padding:12px 14px; font:inherit}
+    textarea:focus,select:focus,input:focus{ outline:3px solid rgba(29,78,216,.25); border-color:var(--focus) }
+    fieldset{border:1px solid var(--border); border-radius:8px; padding:12px; margin-top:16px}
     legend{padding:0 6px; color:var(--muted); font-size:14px}
     .grid{display:grid; gap:12px; grid-template-columns:repeat(2,minmax(0,1fr))}
     @media (max-width:760px){ .grid{grid-template-columns:1fr} }
-    .details summary{cursor:pointer; color:var(--muted)}
-
     .actions{display:flex; gap:10px; margin-top:16px}
-    .btn{
-      appearance:none; border:1px solid #111; background:#111; color:#fff;
-      border-radius:10px; padding:12px 16px; font-weight:700; cursor:pointer;
-    }
-    .btn.primary{ background:#111; border-color:#111; color:#fff }
-    .btn.ghost{ background:#fff; border:1px solid var(--border); color:var(--muted) }
-
-    /* Yellow guidance panel */
-    .guidance{
-      margin-top:24px; background:#fff6b5; border:1px solid #f2e48a;
-      border-radius:var(--radius); padding:16px;
-    }
+    .btn{appearance:none; border:1px solid #111; background:#111; color:#fff; border-radius:10px; padding:12px 16px; font-weight:700; cursor:pointer}
+    .btn.ghost{ background:#fff; border:1px solid var(--border); color:var(--muted)}
+    .guidance{margin-top:24px; background:#fff6b5; border:1px solid #f2e48a; border-radius:8px; padding:16px}
     .guidance h2{margin:0 0 8px; font-size:18px}
     .guidance p{margin:0 0 8px; color:#1f2937}
     .links{margin:8px 0 0; padding-left:18px}
     .links li{margin:4px 0}
-
-    /* Reference docs uploader */
-    .refdocs{margin-top:24px; border:1px dashed var(--border); border-radius:var(--radius); padding:12px}
-    .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:8px}
-    .chip{border:1px solid var(--border); border-radius:999px; padding:6px 10px; background:#fff; font-size:12px}
-    .ok{color:var(--good)} .warn{color:#8a6d1d}
-
-    /* Results */
     #results{margin-top:28px}
     #results h2{margin:0 0 10px; font-size:22px}
     .scorecards{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px}
     @media (max-width:760px){ .scorecards{grid-template-columns:1fr} }
-    .scorecard{border:1px solid var(--border); border-radius:var(--radius); padding:12px; background:#fff}
-    .scorecard h3{margin:0 0 8px}
+    .scorecard{border:1px solid var(--border); border-radius:8px; padding:12px; background:#fff}
     .score{font-weight:700; font-size:30px}
     .stack{display:flex; flex-direction:column; gap:8px}
     .bar{display:flex; align-items:center; gap:12px}
     progress{width:100%; height:10px}
     .cols{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px}
     @media (max-width:760px){ .cols{grid-template-columns:1fr} }
-    .panel{border:1px solid var(--border); border-radius:var(--radius); padding:12px; background:#fff}
+    .panel{border:1px solid var(--border); border-radius:8px; padding:12px; background:#fff}
     .risks li{color:var(--warn)}
     .reasons, ul, ol{margin:8px 0 0; padding-left:18px}
-
     footer{border-top:1px solid var(--border); margin-top:28px; padding:14px 0}
     .tiny{font-size:12px; color:var(--muted)}
     .hidden{display:none}
-
-    /* Tiny toast */
     #toast{position:fixed;left:50%;top:18px;transform:translateX(-50%);
       background:#111;color:#fff;padding:10px 14px;border-radius:8px;z-index:9999;font-weight:600;box-shadow:0 6px 20px rgba(0,0,0,.2);display:none}
+    .badge{display:inline-block; margin-left:8px; padding:3px 8px; font-size:12px; border:1px solid var(--border); border-radius:999px; color:#374151; background:#fafafa}
   </style>
 </head>
 <body>
   <header>
     <div class="wrap">
-      <h1>Before you start</h1>
+      <h1>Before you start <span id="rulesBadge" class="badge">Ruleset loading…</span></h1>
       <p class="lede">
         Paste your proposal summary to check <strong>eligibility</strong> and <strong>Discovery Research remit</strong> fit for the Wellcome Early‑Career Award.
         This is a design prototype; results are heuristic, not a funding decision.
@@ -119,20 +71,7 @@
   </header>
 
   <main class="wrap">
-    <!-- Reference documents (PDF) -->
-    <section class="refdocs" aria-labelledby="refdocs-title">
-      <h2 id="refdocs-title">Reference documents (PDF)</h2>
-      <p class="lede">Add the official scheme/remit PDFs here. The page will learn rules from them (client‑side) and cite page numbers in results.</p>
-      <div class="row">
-        <input type="file" id="pdfInput" accept="application/pdf" multiple />
-        <button type="button" id="clearDocsBtn" class="btn ghost">Clear docs</button>
-      </div>
-      <div id="pdfStatus" class="chips" aria-live="polite"></div>
-      <small class="muted">All parsing is done in your browser. No files are uploaded.</small>
-    </section>
-
-    <!-- FORM -->
-    <form id="checkerForm" novalidate style="margin-top:20px">
+    <form id="checkerForm" novalidate>
       <label class="block">
         <div class="label">Enter your proposal summary</div>
         <textarea id="summary" placeholder="Paste or type ~500–1,500 words describing aims, rationale, methods, expected knowledge gains, and key risks…"></textarea>
@@ -157,506 +96,4 @@
           </label>
 
           <label class="block">
-            <div class="label">Time on project (%)</div>
-            <input type="number" id="timePct" min="0" max="100" step="1" placeholder="e.g., 80" />
-          </label>
-
-          <label class="block">
-            <div class="label">Administering organisation</div>
-            <select id="orgLoc">
-              <option value="unknown" selected>Select…</option>
-              <option value="uk">UK</option>
-              <option value="roi">Republic of Ireland</option>
-              <option value="lmics">Low-/middle‑income country</option>
-              <option value="india">India (not eligible)</option>
-              <option value="china">Mainland China (not eligible)</option>
-              <option value="other">Other</option>
-            </select>
-          </label>
-
-          <label class="block">
-            <div class="label">Co‑applicants (ECA)</div>
-            <select id="coapplicants">
-              <option value="unknown" selected>Select…</option>
-              <option value="no">No (lead applicant only)</option>
-              <option value="yes">Yes (co‑applicants listed)</option>
-            </select>
-          </label>
-        </div>
-
-        <details class="details" style="margin-top:8px">
-          <summary>Potential out‑of‑remit signals</summary>
-          <div class="grid" style="margin-top:8px">
-            <label class="block">
-              <div class="label">Main aim is to test if an intervention works (e.g., large RCT)</div>
-              <select id="trialFocus"><option>No</option><option>Yes</option></select>
-            </label>
-            <label class="block">
-              <div class="label">Primary goal is diagnostic/treatment for clinical care</div>
-              <select id="diagnosticFocus"><option>No</option><option>Yes</option></select>
-            </label>
-            <label class="block">
-              <div class="label">Animal disease not relevant to humans</div>
-              <select id="animalOut"><option>No</option><option>Yes</option></select>
-            </label>
-            <label class="block">
-              <div class="label">Stand‑alone database/resource without research questions</div>
-              <select id="standalone"><option>No</option><option>Yes</option></select>
-            </label>
-          </div>
-        </details>
-      </fieldset>
-
-      <div class="actions">
-        <button type="button" id="analyzeBtn" class="btn primary">Submit proposal summary</button>
-        <button type="button" id="exportBtn" class="btn">Export report (PDF)</button>
-        <button type="button" id="resetBtn" class="btn ghost">Reset</button>
-      </div>
-    </form>
-
-    <!-- Yellow guidance panel -->
-    <section class="guidance" aria-labelledby="how-it-works">
-      <h2 id="how-it-works">How Wellcome grant funding works</h2>
-      <p>Use these links to check scope, eligibility and conditions before you complete a full application.</p>
-      <ul class="links">
-        <li><a target="_blank" rel="noreferrer" href="https://wellcome.org/research-funding/guidance/prepare-to-apply (what we fund)</a></li>
-        <li><a target="_blank" rel="noreferrer" href="https://wellcome.org/research-funding/schemes/wellcome-early-career-awards">Early‑Career Award (scheme page)</a></li>
-        <li><a target="_blank" rel="noreferrer" href="https://wellcome.org/research-funding">Grant conditions & policies</a></li>
-        <li><a target="_blank" rel="noreferrer" href="https://wellcome.org/research-funding">Early‑career researcher guidance</a></li>
-      </ul>
-      <p><strong>Need help?</strong> Contact Wellcome Funding Information Advisers via the “Contact us” links on the pages above.</p>
-    </section>
-
-    <!-- RESULTS -->
-    <section id="results" class="hidden" aria-live="polite">
-      <h2>Results</h2>
-      <div class="scorecards">
-        <div class="scorecard">
-          <h3>Eligibility</h3>
-          <div class="score" id="eligScore">–</div>
-          <ul id="eligReasons" class="reasons"></ul>
-        </div>
-        <div class="scorecard">
-          <h3>Remit fit</h3>
-          <div class="score" id="remitScore">–</div>
-          <ul id="remitReasons" class="reasons"></ul>
-        </div>
-        <div class="scorecard">
-          <h3>Assessment (50/25/25)</h3>
-          <div class="stack">
-            <div class="bar"><span>Proposal (50%)</span><progress id="propProg" max="100" value="0"></progress></div>
-            <div class="bar"><span>Skills & experience (25%)</span><progress id="skillsProg" max="100" value="0"></progress></div>
-            <div class="bar"><span>Research environment (25%)</span><progress id="envProg" max="100" value="0"></progress></div>
-          </div>
-          <ul id="assessNotes" class="reasons"></ul>
-        </div>
-      </div>
-
-      <div class="cols">
-        <div class="panel">
-          <h3>Strengths</h3>
-          <ul id="strengths"></ul>
-        </div>
-        <div class="panel">
-          <h3>Risks</h3>
-          <ul id="risks" class="risks"></ul>
-        </div>
-      </div>
-
-      <div class="panel" style="margin-top:12px">
-        <h3>Suggestions to tighten your summary</h3>
-        <ol id="suggestions"></ol>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="wrap tiny">
-      <p>Prototype for product exploration. Sources are parsed from the PDFs you add. No affiliation implied. No data leaves your browser.</p>
-    </div>
-  </footer>
-
-  <div id="toast" role="status" aria-live="polite"></div>
-
-  <!-- PDF.js (client-side PDF parsing) -->
-  https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js</script>
-  <script>
-    /* Configure worker */
-    pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
-  </script>
-
-  <!-- ===== Analysis + PDF ingestion ===== -->
-  <script>
-    const $ = id => document.getElementById(id);
-    const analyzeBtn = $('analyzeBtn'), results = $('results'), exportBtn = $('exportBtn'), resetBtn = $('resetBtn');
-    const pdfInput = $('pdfInput'), pdfStatus = $('pdfStatus'), clearDocsBtn = $('clearDocsBtn');
-
-    // In-memory "model" compiled from PDFs
-    const model = {
-      docs: [],                     // [{name, pages:[{n,text}], bytes}]
-      positives: [],                // [{phrase, page, source}]
-      negatives: [],                // [{phrase, page, source}]
-      eligibilityCues: []           // [{phrase, page, source, type}]
-    };
-
-    // Default fallback patterns (used even if no PDFs loaded)
-    const DEFAULT_POS = [
-      'mechanism', 'causal', 'pathophysiology', 'fundamental',
-      'novel method', 'framework', 'tool', 'conceptual',
-      'theoretical', 'insight', 'understanding', 'hypothesis', 'exploratory'
-    ];
-    const DEFAULT_NEG = [
-      'large clinical trial', 'randomized', 'randomised', 'phase i', 'phase ii', 'phase iii', 'efficacy',
-      'diagnostic', 'screening', 'clinical decision support', 'triage',
-      'stand-alone database', 'standalone database',
-      'animal disease not transmissible to humans', 'veterinary-only'
-    ];
-    const DEFAULT_ELIG = [
-      { phrase:'co-applicant', type:'coapps' },
-      { phrase:'coapplicant', type:'coapps' },
-      { phrase:'co-investigator', type:'coapps' },
-      { phrase:'mainland china', type:'china' },
-      { phrase:'people\'s republic of china', type:'china' },
-      { phrase:'india', type:'india' },
-      { phrase:'80% of (my|the) time', type:'time-ok' },
-      { phrase:'60% of (my|the) time', type:'time-bad' },
-      { phrase:'phd student', type:'phd-not-complete' },
-      { phrase:'phd candidate', type:'phd-not-complete' }
-    ];
-
-    // ---------- PDF ingestion ----------
-    pdfInput.addEventListener('change', async (e) => {
-      const files = [...e.target.files];
-      if (!files.length) return;
-      pdfStatus.innerHTML = '';
-      for (const f of files) {
-        const entry = await parsePDF(f);
-        model.docs.push(entry);
-        chip(`${f.name} · ${entry.pages.length}p`, 'ok');
-        // Try to auto-extract rules from each doc
-        extractRulesFromDoc(entry);
-      }
-      if (model.positives.length || model.negatives.length) {
-        chip(`Remit rules: +${model.positives.length} / -${model.negatives.length}`, 'ok');
-      } else {
-        chip('No headings matched; using fallback patterns', 'warn');
-      }
-    });
-
-    clearDocsBtn.addEventListener('click', () => {
-      model.docs = []; model.positives = []; model.negatives = []; model.eligibilityCues = [];
-      pdfStatus.innerHTML = '';
-      chip('Cleared reference docs', 'warn');
-    });
-
-    function chip(text, cls=''){
-      const span = document.createElement('span');
-      span.className = `chip ${cls}`;
-      span.textContent = text;
-      pdfStatus.appendChild(span);
-    }
-
-    async function parsePDF(file){
-      const arrayBuf = await file.arrayBuffer();
-      const doc = await pdfjsLib.getDocument({data: arrayBuf}).promise;
-      const pages = [];
-      for (let p=1; p<=doc.numPages; p++){
-        const page = await doc.getPage(p);
-        const content = await page.getTextContent();
-        const text = content.items.map(i => (i.str||'')).join(' ').replace(/\s+/g,' ').trim();
-        pages.push({ n:p, text });
-      }
-      return { name:file.name, pages };
-    }
-
-    // Extract rules by crude heading detection
-    function extractRulesFromDoc(doc){
-      // Join page by page, but keep page numbers for citations
-      const getAfter = (page, startRegex, stopRegex) => {
-        // get text after a heading within the same page (best-effort)
-        const t = page.text;
-        const start = t.search(startRegex);
-        if (start === -1) return null;
-        const sub = t.slice(start);
-        const stop = sub.search(stopRegex);
-        return stop === -1 ? sub : sub.slice(0, stop);
-      };
-
-      const whatWeFund = /what we fund|we support|we fund research/i;
-      const whatWeDont = /what we don.?t fund|we will not fund|out of remit|examples of things we will not fund/i;
-      const eligibility = /eligibility|who can apply|lead applicant|co[-\s]?applicants?|time you must contribute|administering organisation/i;
-      const nextHeading = /\b(what we fund|what we don|who we fund|eligibility|co[-\s]?applicants|time|administering|award|how to apply)\b/i;
-
-      for (const page of doc.pages){
-        // positives
-        const posBlock = getAfter(page, whatWeFund, nextHeading);
-        if (posBlock){
-          const plus = harvestBulletsOrPhrases(posBlock);
-          plus.forEach(phrase => {
-            model.positives.push({ phrase:phrase.toLowerCase(), page:page.n, source:doc.name });
-          });
-        }
-        // negatives
-        const negBlock = getAfter(page, whatWeDont, nextHeading);
-        if (negBlock){
-          const minus = harvestBulletsOrPhrases(negBlock);
-          minus.forEach(phrase => {
-            model.negatives.push({ phrase:phrase.toLowerCase(), page:page.n, source:doc.name });
-          });
-        }
-        // eligibility cues (co‑applicants, 80%, locations, etc.)
-        const eligBlock = getAfter(page, eligibility, nextHeading);
-        if (eligBlock){
-          const cues = harvestEligibilityCues(eligBlock);
-          cues.forEach(c => model.eligibilityCues.push({ ...c, page:page.n, source:doc.name }));
-        }
-      }
-
-      // De-duplicate
-      model.positives = dedupeByKey(model.positives, (x)=>x.phrase);
-      model.negatives = dedupeByKey(model.negatives, (x)=>x.phrase);
-      model.eligibilityCues = dedupeByKey(model.eligibilityCues, (x)=>x.phrase + '|' + x.type);
-    }
-
-    function harvestBulletsOrPhrases(block){
-      // split roughly; keep short, meaningful fragments
-      const dots = block
-        .split(/[-–•]\s+/g) // bullets
-        .concat(block.split(/\.\s+/g)); // sentences
-      return dots
-        .map(s => s.replace(/\s+/g,' ').trim())
-        .filter(s => s && s.length >= 3 && s.length <= 140)
-        .filter(s => !/^what we/i.test(s))
-        .slice(0, 40);
-    }
-
-    function harvestEligibilityCues(block){
-      const cues = [];
-      const lower = block.toLowerCase();
-      if (/co[-\s]?applicants?\s+(are )?not accepted|co[-\s]?applicants?:\s*not/i.test(lower))
-        cues.push({ phrase:'co‑applicants not accepted', type:'coapps-no' });
-      if (/80%\s*(of)?\s*(research)?\s*time|contribute at least 80%/i.test(block))
-        cues.push({ phrase:'≥80% research time expected', type:'time-rule' });
-      if (/administering organisation.*(uk|united kingdom|republic of ireland|low-?\s*\/?\s*middle-?\s*income)/i.test(lower))
-        cues.push({ phrase:'Admin org must be UK/ROI/LMICs', type:'admin-locs' });
-      if (/india|mainland china/i.test(lower))
-        cues.push({ phrase:'Admin org cannot be India or mainland China', type:'admin-ban' });
-      return cues;
-    }
-
-    function dedupeByKey(arr, keyFn){
-      const seen = new Set(); const out=[];
-      for (const x of arr){
-        const k = keyFn(x);
-        if (!seen.has(k)){ seen.add(k); out.push(x); }
-      }
-      return out;
-    }
-
-    // ---------- Analysis ----------
-    analyzeBtn.addEventListener('click', runAnalysis);
-    exportBtn.addEventListener('click', () => window.print());
-    resetBtn.addEventListener('click', () => { $('checkerForm').reset(); results.classList.add('hidden'); });
-
-    function runAnalysis(){
-      const summary = $('summary').value.trim();
-      if (!summary) { $('summary').focus(); toast('Please paste a short proposal summary first.'); return; }
-
-      const prev = analyzeBtn.textContent;
-      analyzeBtn.disabled = true; analyzeBtn.textContent = 'Analysing…';
-
-      try {
-        // Gather explicit inputs
-        const training   = $('training').value;
-        const postdocYears = parseFloat($('postdocYears').value || 'NaN');
-        const timePct    = parseFloat($('timePct').value || 'NaN');
-        const orgLoc     = $('orgLoc').value;
-        const coapps     = $('coapplicants').value;
-        const s = summary;
-
-        // Infer from text to fill gaps
-        const inferred = inferSignalsFromText(s);
-
-        // ===== Eligibility =====
-        let elig = 100; const eligReasons = []; const needInputs = [];
-
-        // Training
-        if (training === 'unknown'){
-          needInputs.push('Career training');
-          if (inferred.phdNotDone){ elig -= 40; eligReasons.push('Summary suggests the applicant may still be a PhD student/candidate.'); }
-        } else if (training === 'none'){
-          elig -= 50; eligReasons.push('Needs PhD or ≥4 years equivalent research experience.');
-        }
-
-        // Postdoc years
-        if (Number.isNaN(postdocYears)){
-          if (inferred.postdocOver3){ elig -= 10; eligReasons.push('Text suggests >3 years postdoc – add context (breaks, part‑time, discipline change).'); }
-          else needInputs.push('Postdoctoral experience (years)');
-        } else if (postdocYears > 3){
-          elig -= 10; eligReasons.push('Postdoctoral experience >3 years – add context (breaks, part‑time, discipline change).');
-        }
-
-        // Time
-        if (Number.isNaN(timePct)){
-          if (inferred.timeUnder80){ elig -= 25; eligReasons.push('Text implies <80% time on project – ECA expects ≥80%.'); }
-          else needInputs.push('Time on project (%)');
-        } else if (timePct < 80){
-          elig -= 25; eligReasons.push('Commit at least 80% of research time to the project (≤20% other duties).');
-        }
-
-        // Admin org
-        if (orgLoc === 'unknown'){
-          needInputs.push('Administering organisation location');
-          if (inferred.mentionsIndia){ elig -= 100; eligReasons.push('Admin org appears to be in India (ineligible for ECA).'); }
-          if (inferred.mentionsMainlandChina){ elig -= 100; eligReasons.push('Admin org appears to be in mainland China (ineligible for ECA).'); }
-        } else if (orgLoc==='india' || orgLoc==='china'){
-          elig -= 100; eligReasons.push('Administering organisation location is ineligible for ECA.');
-        }
-
-        // Co‑applicants
-        if (coapps === 'unknown'){
-          needInputs.push('Co‑applicants (ECA)');
-          if (inferred.coApplicantsLikely){ elig -= 25; eligReasons.push('Text suggests co‑applicants/consortium – ECA is for a single lead applicant.'); }
-        } else if (coapps === 'yes'){
-          elig -= 25; eligReasons.push('Co‑applicants are not accepted for the Early‑Career Award.');
-        }
-
-        // Bonus: include any eligibility rules parsed from PDFs as reasons
-        for (const cue of model.eligibilityCues){
-          // Show rules to explain expectations; don’t auto‑deduct unless type matches a violation already considered
-          eligReasons.push(`${cue.phrase} <em>(from ${cue.source}, p.${cue.page})</em>`);
-        }
-
-        elig = clamp(elig);
-        if (needInputs.length && elig > 0){
-          eligReasons.unshift(`Eligibility is provisional – please provide: ${needInputs.join(', ')}.`);
-        }
-        if (elig < 0) elig = 0;
-
-        // ===== Remit =====
-        // Build effective positive/negative pattern sets (PDFs + defaults)
-        const posPats = (model.positives.length ? model.positives.map(p=>p.phrase) : DEFAULT_POS).map(normalize);
-        const negPats = (model.negatives.length ? model.negatives.map(p=>p.phrase) : DEFAULT_NEG).map(normalize);
-
-        // Count hits (and cite which doc/page triggered it if available)
-        const remitReasons = [];
-        let posHits = matchAndCite(s, model.positives, posPats, remitReasons, +5, 'Positive remit cue');
-        let negHits = matchAndCite(s, model.negatives, negPats, remitReasons, -12, 'Out‑of‑remit cue');
-
-        // Also include some heuristic negatives if not present in PDFs
-        if (!model.negatives.length){
-          const trials = /(randomi[sz]ed|phase\s?(I{1,3}|iv|2|3)\b|trial|efficacy)/i.test(s);
-          if (trials){ negHits += 1; remitReasons.push('Large clinical trial / efficacy‑testing focus – emphasise mechanism/understanding.'); }
-          const diag = /(diagnostic|screening|clinical decision support|triage)\b/i.test(s);
-          if (diag){ negHits += 1; remitReasons.push('Diagnostic/clinical‑care primary aim – ensure advance to research understanding or methods.'); }
-          const dbOnly = (/(database|registry|repository)\b/i.test(s)) && !/(research question|hypothes|aim)/i.test(s);
-          if (dbOnly){ negHits += 1; remitReasons.push('Stand‑alone resource without clear research questions.'); }
-        }
-
-        let remit = 80 + posHits*3 - negHits*15;
-        remit = clamp(remit);
-
-        // ===== Assessment heuristics =====
-        const len = s.split(/\s+/).filter(Boolean).length;
-        const hasAims    = /(aim|objective|we propose|we will)/i.test(s);
-        const hasMethods = /(method|approach|data|model|experiment|fieldwork|analysis|sample|cohort|interview|ethnograph|survey)/i.test(s);
-        const hasRisks   = /(risk|limitation|challenge|mitigat)/i.test(s);
-        const hasTeam    = /(mentor|sponsor|collaborat|training|skills|develop)/i.test(s);
-        const hasEnv     = /(environment|host|facilit(y|ies)|infrastructure|culture|inclusive|open|data sharing)/i.test(s);
-        const novelty    = /(novel|first|innovative|creative|new|advance)/i.test(s);
-
-        let prop=10; prop+=hasAims?25:0; prop+=hasMethods?25:0; prop+=novelty?15:0; prop+=hasRisks?15:0; prop+=(len>200?10:0); prop=Math.min(100,prop);
-        let skills=10; skills+=hasTeam?40:0; skills+=(Number.isNaN(postdocYears)||postdocYears<=3?10:5); skills+=(training!=='none'&&training!=='unknown'?20:0); skills=Math.min(100,skills);
-        let env=10; env+=hasEnv?60:0; env=Math.min(100,env);
-
-        // ===== Render =====
-        results.classList.remove('hidden');
-        $('eligScore').textContent  = Math.round(elig);
-        $('eligReasons').innerHTML  = renderList(uniq(eligReasons), false);
-        $('remitScore').textContent = Math.round(remit);
-        $('remitReasons').innerHTML = renderList(uniq(remitReasons), false);
-
-        $('propProg').value = prop; $('skillsProg').value = skills; $('envProg').value = env;
-        $('assessNotes').innerHTML =
-          `<li>Proposal ~${len} words; heuristic quality score ${Math.round(prop)}.</li>`+
-          `<li>Skills/experience proxy ${Math.round(skills)}; Environment proxy ${Math.round(env)}.</li>`;
-
-        const strengths=[], risks=[];
-        if(novelty) strengths.push('Signals of novelty/creativity are present.');
-        if(hasMethods) strengths.push('Methods/approach described.');
-        if(hasRisks) strengths.push('Risks/mitigations acknowledged.');
-        if(hasTeam) strengths.push('Development/training/collaboration elements referenced.');
-        if(hasEnv) strengths.push('Positive research environment and culture cues.');
-        if(!hasAims) risks.push('Make the aims/objectives explicit and succinct.');
-        if(!hasMethods) risks.push('Describe the methodology and why it’s the right approach.');
-        if(!hasRisks) risks.push('Add key risks/uncertainties and mitigations.');
-        if(remit<70) risks.push('Reframe to emphasise discovery‑led understanding/mechanism.');
-        if(elig<70) risks.push('Address eligibility gaps (training, time commitment, co‑applicants, admin org).');
-
-        $('strengths').innerHTML = renderList(strengths,true);
-        $('risks').innerHTML     = renderList(risks,true);
-
-        const sugg=[];
-        if(!hasAims)    sugg.push('Open with a <strong>bold, discovery‑led question</strong> and 2–3 concise aims.');
-        if(!hasMethods) sugg.push('Outline key <strong>methods/approach</strong> and why they best answer the question.');
-        if(!/insight|understanding|mechanism/i.test(s)) sugg.push('State the <strong>new knowledge/insight</strong> expected and how it shifts understanding.');
-        if(!hasRisks)   sugg.push('List <strong>main risks/uncertainties</strong> and brief mitigations.');
-        if(!hasTeam)    sugg.push('Mention <strong>training/skills development</strong> and any collaborators’ roles.');
-        if(!hasEnv)     sugg.push('Reference your <strong>research environment</strong> and an <strong>inclusive, open culture</strong>.');
-        if((/(randomi[sz]ed|phase\s?(I{1,3}|iv|2|3)\b|trial|efficacy)/i.test(s))||(/(diagnostic|screening|clinical decision support|triage)\b/i.test(s)))
-          sugg.push('If any trial/diagnostic elements exist, position them to probe <strong>mechanism</strong> or early <strong>proof‑of‑concept</strong> within a discovery‑led programme.');
-        $('suggestions').innerHTML = sugg.length ? sugg.map(li => `<li>${li}</li>`).join('') : '<li>Looks good. Consider minor tightening for clarity.</li>';
-
-        results.scrollIntoView({behavior:'smooth', block:'start'});
-
-      } catch(e){
-        console.error(e); toast('Something went wrong while analysing. See console for details.');
-      } finally {
-        analyzeBtn.disabled = false; analyzeBtn.textContent = 'Submit proposal summary';
-      }
-    }
-
-    // ---- helpers ----
-    function inferSignalsFromText(summary){
-      const timeUnder80Reg = /\b([1-7]\d)\s*%(\s*(fte|time|effort))?\b/i; // 10–79%
-      return {
-        coApplicantsLikely: /(co[-\s]?applicant|co[-\s]?investigator|co[-\s]?pi|consortium|multi[-\s]centre|multi[-\s]center|team of (investigators|applicants))/i.test(summary),
-        mentionsIndia: /\badminister|host|affiliat/i.test(summary) && /\bindia\b/i.test(summary),
-        mentionsMainlandChina: /\bmainland china|people'?s republic of china|prc\b/i.test(summary),
-        phdNotDone: /\b(phd (student|candidate)|enrolled in (a )?phd)\b/i.test(summary),
-        postdocOver3: /\b(postdoc(toral)? (experience )?(over|more than|> ?)?3 (years|yrs))\b/i.test(summary),
-        timeUnder80: timeUnder80Reg.test(summary) && parseInt(summary.match(timeUnder80Reg)[1],10) < 80
-      };
-    }
-
-    function normalize(s){ return s.toLowerCase().trim(); }
-
-    function matchAndCite(text, sourceArray, phrases, reasons, deltaPerHit, label){
-      let hits = 0;
-      const lower = text.toLowerCase();
-      const seen = new Set();
-      for (const ph of phrases){
-        if (!ph || ph.length < 3) continue;
-        if (lower.includes(ph) && !seen.has(ph)){
-          seen.add(ph); hits++;
-          const origin = sourceArray.find(x => x.phrase && normalize(x.phrase) === ph);
-          if (origin){
-            reasons.push(`${label}: “${escapeHtml(origin.phrase)}” <em>(from ${escapeHtml(origin.source)}, p.${origin.page})</em>`);
-          }
-        }
-      }
-      return hits;
-    }
-
-    function uniq(arr){ return [...new Set(arr)]; }
-
-    function renderList(arr, allowEmpty){
-      if(!arr || !arr.length) return allowEmpty ? '<li>—</li>' : '<li>No major issues detected.</li>';
-      return arr.map(s=>`<li>${escapeHtml(s)}</li>`).join('');
-    }
-    function escapeHtml(str){ const map = {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}; return String(str).replace(/[&<>"']/g, ch => map[ch]); }
-    function clamp(n){ return Math.max(0, Math.min(100,n)); }
-    function toast(msg){ const t=$('toast'); t.textContent=msg; t.style.display='block'; clearTimeout(t._h); t._h=setTimeout(()=>t.style.display='none', 2500); }
-  </script>
-</body>
-</html>
+            <
