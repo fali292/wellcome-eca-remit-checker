@@ -6,102 +6,9 @@
   <title>Before you start · Wellcome ECA Remit Checker (Prototype)</title>
   https://fonts.googleapis.com
   https://fonts.gstatic.com
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;lay=swap
-  <style>
-    /* ====== Baseline (closer to the inspiration) ====== */
-    :root{
-      --bg:#ffffff; --ink:#111111; --muted:#4b5563; --link:#0b5cab;
-      --border:#e5e7eb; --focus:#1d4ed8; --accent:#ffdd00; --accent-ink:#111111;
-      --warn:#b45309; --good:#0f9960;
-      --max: 720px;         /* narrower column */
-      --radius: 8px;        /* subtle rounding */
-      --gap: 16px;          /* consistent spacing unit */
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-      color:var(--ink);
-      background:var(--bg);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-    }
-    a{color:var(--link)}
-    .wrap{max-width:var(--max); margin:0 auto; padding:0 16px}
-    header{padding:32px 0 20px; border-bottom:1px solid var(--border)}
-    h1{font-size:32px; line-height:1.2; margin:0 0 6px; font-weight:700; letter-spacing:-0.01em}
-    .lede{margin:0; color:var(--muted); font-size:16px}
-
-    main{padding:24px 0}
-    .block{display:block}
-    .label{font-weight:600; margin-bottom:8px}
-    textarea{
-      width:100%; min-height:230px; resize:vertical;
-      border:1px solid var(--border); border-radius:var(--radius);
-      padding:12px 14px; font:inherit; color:var(--ink); background:#fff;
-    }
-    textarea:focus, select:focus, input:focus{
-      outline:3px solid rgba(29,78,216,.25);
-      border-color:var(--focus);
-    }
-
-    .row{display:flex; flex-wrap:wrap; gap:12px; margin-top:var(--gap); align-items:center}
-    select, input[type="number"]{
-      border:1px solid var(--border); border-radius:var(--radius); background:#fff; color:var(--ink);
-      padding:10px 12px; font:inherit; min-width: 220px;
-    }
-    .check{display:inline-flex; gap:8px; align-items:center; color:var(--muted)}
-
-    fieldset{border:1px solid var(--border); border-radius:var(--radius); padding:12px; margin-top:var(--gap)}
-    legend{padding:0 6px; color:var(--muted); font-size:14px}
-    .grid{display:grid; gap:12px; grid-template-columns:repeat(2,minmax(0,1fr))}
-    @media (max-width:760px){ .grid{grid-template-columns:1fr} }
-
-    .details summary{cursor:pointer; color:var(--muted)}
-    .actions{display:flex; gap:10px; margin-top:16px}
-    .btn{
-      appearance:none; border:1px solid var(--border); background:#fff; color:var(--ink);
-      border-radius:10px; padding:12px 16px; font-weight:700; cursor:pointer;
-    }
-    /* Primary CTA: black button (closer to the inspiration) */
-    .btn.primary{ background:#111; border-color:#111; color:#fff }
-    .btn.ghost{ color:var(--muted) }
-
-    /* Yellow guidance panel right below the form */
-    .guidance{
-      margin-top:24px;
-      background:#fff6b5; /* warm soft yellow */
-      border:1px solid #f2e48a;
-      border-radius:var(--radius);
-      padding:16px;
-    }
-    .guidance h2{margin:0 0 8px; font-size:18px}
-    .guidance p{margin:0 0 8px; color:#1f2937}
-    .links{margin:8px 0 0; padding-left:18px}
-    .links li{margin:4px 0}
-
-    /* Results section uses plain blocks (no cards/chrome) */
-    #results{margin-top:28px}
-    #results h2{margin:0 0 10px; font-size:22px}
-    .scorecards{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px}
-    @media (max-width:760px){ .scorecards{grid-template-columns:1fr} }
-    .scorecard{border:1px solid var(--border); border-radius:var(--radius); padding:12px; background:#fff}
-    .scorecard h3{margin:0 0 8px}
-    .score{font-weight:700; font-size:30px}
-    .stack{display:flex; flex-direction:column; gap:8px}
-    .bar{display:flex; align-items:center; gap:12px}
-    progress{width:100%; height:10px}
-    .cols{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px}
-    @media (max-width:760px){ .cols{grid-template-columns:1fr} }
-    .panel{border:1px solid var(--border); border-radius:var(--radius); padding:12px; background:#fff}
-    .risks li{color:var(--warn)}
-    .reasons, ul, ol{margin:8px 0 0; padding-left:18px}
-
-    footer{border-top:1px solid var(--border); margin-top:28px; padding:14px 0}
-    .tiny{font-size:12px; color:var(--muted)}
-    .hidden{display:none}
-  </style>
+  https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap
+  <!-- Cache-busted CSS to avoid stale assets -->
+  ./styles.css?v=20251016-1
 </head>
 <body>
   <header>
@@ -215,8 +122,9 @@
       <h2 id="how-it-works">How Wellcome grant funding works</h2>
       <p>Use these links to check scope, eligibility and conditions before you complete a full application.</p>
       <ul class="links">
-        <li><a target="_blank" rel="noreferrer" href="https://wellcome.org/research-funding/guidance/prepare-to-apply/discovery-research-schemes-remit></li>
-        <li><a target="_blank" rel="noreferrer" href="https://wellcome.org/research-funding/schemes/wellcome-early-career-awards        <li>https://wellcome.org/research-funding/guidance/policies-grant-conditions/grant-conditionsGrant conditions & policies</a></li>
+        <li><a target="_blank" rel="noreferrer" href="https://wellcome.org/research-funding/guidchemes-remitDiscovery Research remit (what we fund)</a></li>
+        <li>https://wellcome.org/research-funding/schemes/wellcome-early-career-awardsEarly‑Career Award (scheme page)</a></li>
+        <li><a target="_blank" rel="noreferrer" href="https://wellcome.org/research-funding/guidance/policiesnditions & policies</a></li>
         <li>https://wellcome.org/research-funding/guidance/prepare-to-apply/early-career-researchEarly‑career researcher guidance</a></li>
       </ul>
       <p><strong>Need help?</strong> Contact Wellcome Funding Information Advisers via the “Contact us” links on the pages above.</p>
@@ -271,7 +179,7 @@
   </footer>
 
   <script>
-    // ====== Same analysis logic (client-side only) ======
+    // Analysis logic (client-side only)
     const $ = id => document.getElementById(id);
     const analyzeBtn = $('analyzeBtn'), results = $('results'), exportBtn = $('exportBtn'), resetBtn = $('resetBtn');
 
@@ -292,7 +200,6 @@
       const animalOut = $('animalOut').value === 'Yes';
       const standalone = $('standalone').value === 'Yes';
 
-      // Eligibility (0-100)
       let elig=100, eligReasons=[];
       if(training==='none'){ elig-=50; eligReasons.push('Needs PhD or ≥4 years equivalent research experience.'); }
       if(postdocYears>3){ elig-=10; eligReasons.push('Postdoctoral experience >3 years – add context (breaks, part‑time, discipline change).'); }
@@ -301,24 +208,14 @@
       if(coapps){ elig-=25; eligReasons.push('Co‑applicants are not accepted for the Early‑Career Award.'); }
       elig = clamp(elig);
 
-      // Remit fit (0-100)
       let remit=100, remitReasons=[];
-      if(trialFocus || /randomi(s|z)ed|phase\s?(I{1,3}|iv|2|3)/i.test(summary)){
-        remit-=35; remitReasons.push('Large clinical trial / efficacy‑testing focus – Discovery remit prioritises understanding/mechanism.');
-      }
-      if(diagnosticFocus || /(diagnostic|screening|clinical decision support|triage)\b/i.test(summary)){
-        remit-=25; remitReasons.push('Primary aim appears diagnostic/clinical‑care oriented – emphasise benefits to research understanding or methods.');
-      }
+      if(trialFocus || /randomi(s|z)ed|phase\s?(I{1,3}|iv|2|3)/i.test(summary)){ remit-=35; remitReasons.push('Large clinical trial / efficacy‑testing focus – Discovery remit prioritises understanding/mechanism.'); }
+      if(diagnosticFocus || /(diagnostic|screening|clinical decision support|triage)\b/i.test(summary)){ remit-=25; remitReasons.push('Primary aim appears diagnostic/clinical‑care oriented – emphasise benefits to research understanding or methods.'); }
       if(animalOut){ remit-=40; remitReasons.push('Animal disease not relevant to humans – out of remit unless zoonotic or a model for human biology.'); }
-      if(standalone || (/(database|registry|repository)\b/i.test(summary) && !/(research question|hypothes|aim)/i.test(summary))){
-        remit-=20; remitReasons.push('Stand‑alone resource without clear research questions – only in remit if integral to answering them.');
-      }
-      if (/(mechanism|causal|pathophysiology|fundamental|novel method|framework|tool|conceptual|theoretical|insight|understanding|hypothesis|explor(e|atory))/i.test(summary)){
-        remit += 5;
-      }
+      if(standalone || (/(database|registry|repository)\b/i.test(summary) && !/(research question|hypothes|aim)/i.test(summary))){ remit-=20; remitReasons.push('Stand‑alone resource without clear research questions – only in remit if integral to answering them.'); }
+      if (/(mechanism|causal|pathophysiology|fundamental|novel method|framework|tool|conceptual|theoretical|insight|understanding|hypothesis|explor(e|atory))/i.test(summary)){ remit += 5; }
       remit = clamp(remit);
 
-      // Assessment heuristics
       const len = summary.split(/\s+/).filter(Boolean).length;
       const hasAims    = /(aim|objective|we propose|we will)/i.test(summary);
       const hasMethods = /(method|approach|data|model|experiment|fieldwork|analysis|sample|cohort|interview|ethnograph|survey)/i.test(summary);
@@ -331,7 +228,6 @@
       let skills=10; skills+=hasTeam?40:0; skills+=(postdocYears<=3?10:5); skills+=(training!=='none'?20:0); skills=Math.min(100,skills);
       let env=10; env+=hasEnv?60:0; env=Math.min(100,env);
 
-      // Render
       results.classList.remove('hidden');
       $('eligScore').textContent = elig;
       $('eligReasons').innerHTML = renderList(eligReasons);
@@ -365,11 +261,8 @@
       $('suggestions').innerHTML = sugg.length ? sugg.map(s => `<li>${s}</li>`).join('') : '<li>Looks good. Consider minor tightening for clarity.</li>';
     }
 
-    function renderList(arr, allowEmpty){
-      if(!arr || !arr.length) return allowEmpty ? '<li>—</li>' : '<li>No major issues detected.</li>';
-      return arr.map(s=>`<li>${escapeHtml(s)}</li>`).join('');
-    }
-    function escapeHtml(str){ return String(str).replace(/[&<>\"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[s])); }
+    function renderList(arr, allowEmpty){ if(!arr || !arr.length) return allowEmpty?'<li>—</li>':'<li>No major issues detected.</li>'; return arr.map(s=>`<li>${escapeHtml(s)}</li>`).join(''); }
+    function escapeHtml(str){ return String(str).replace(/[&<>\"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',\"'\":'&#039;'}[s])); }
     function clamp(n){ return Math.max(0, Math.min(100,n)); }
   </script>
 </body>
